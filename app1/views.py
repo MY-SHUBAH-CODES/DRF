@@ -1,8 +1,6 @@
-from django.shortcuts import render,HttpResponse
-from django.http import JsonResponse
+from django.shortcuts import HttpResponse
 from .models import *
 from .serializers import *
-from rest_framework import status
 
 import io
 from rest_framework.parsers import JSONParser
@@ -46,9 +44,29 @@ def home(request):
             res={'msg':'save ho gaya'}
             jsondata=JSONRenderer().render(data=res['msg'])
             return HttpResponse(jsondata,content_type='application/json')
-        res={'msg':"invalid request"}
-        jsondata=JSONRenderer().render(data=res['msg'])
+        jsondata=JSONRenderer().render(serializer.errors)
         return HttpResponse(jsondata,content_type='application/json')
+
+    if request.method =='PUT':
+        mydata=request.body
+        stream=io.BytesIO(mydata)
+        pydata=JSONParser().parse(stream)
+        id=pydata.get('id')
+        stu=Student.objects.get(id=id)
+        serializer=Studentserializer(stu,data=pydata,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            res={"msg":"bhai ho gaya update"}
+            jsondata=JSONRenderer().render(res['msg'])
+            return HttpResponse(jsondata,content_type='application/json')
+        jsondata=JSONRenderer().render(serializer.errors)
+        return HttpResponse(jsondata,content_type='application/json')
+
+
+        
+    
+
+
 
 
 
