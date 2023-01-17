@@ -32,17 +32,41 @@ import json
 # postdata()
 
 
+
+
+# put method---------------
+# URL="http://127.0.0.1:8000/apidata/"
+
+# data={"id":"1","name":"rai sab","age":"20","roll_number":"1"}
+# jsondata=json.dumps(data)
+# def updatedata():
+#     r=requests.put(url=URL,data=jsondata)
+#     jsonres=r.json()
+#     print(jsonres)
+
+# updatedata()
+
+
+
+
 # put method---------------
 URL="http://127.0.0.1:8000/apidata/"
-
-data={"id":"1","name":"rai sab","age":"20","roll_number":"1"}
+data={"id":2}
 jsondata=json.dumps(data)
-def updatedata():
-    r=requests.put(url=URL,data=jsondata)
-    jsonres=r.json()
-    print(jsonres)
+def getstdata():
+    data=requests.delete(url=URL,data=jsondata)
+    jsdata=data.json()
+    print(jsdata)
 
-updatedata()
+getstdata()
+
+
+
+
+
+
+
+
 
 
 

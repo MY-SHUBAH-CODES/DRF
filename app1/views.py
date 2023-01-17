@@ -63,8 +63,22 @@ def home(request):
         return HttpResponse(jsondata,content_type='application/json')
 
 
+
+    if request.method=='DELETE':
+        mydata=request.body
+        stream=io.BytesIO(mydata)
+        pydata=JSONParser().parse(stream)
+        id=pydata.get('id')
+        stu=Student.objects.get(id=id)
+        stu.delete()
+        res={"msg":"kar dia delete"}
+        jsondata=JSONRenderer().render(res['msg'])
+        return HttpResponse(jsondata,content_type='application/json')
+
+
         
     
+
 
 
 
