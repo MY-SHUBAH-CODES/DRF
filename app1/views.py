@@ -1,4 +1,4 @@
-from django.shortcuts import HttpResponse
+from django.shortcuts import HttpResponse,render
 from .models import *
 from .serializers import *
 
@@ -74,6 +74,9 @@ def home(request):
         res={"msg":"kar dia delete"}
         jsondata=JSONRenderer().render(res['msg'])
         return HttpResponse(jsondata,content_type='application/json')
+
+def root(request):
+    return render(request,'root.html',{"data":"Click"})
 
 
         
